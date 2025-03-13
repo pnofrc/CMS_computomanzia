@@ -40,6 +40,6 @@ class RunNpmBuildBenedetta extends Command
         //     throw new ProcessFailedException($process);
         // }
 
-        $this->info('Build completata con successo!');
+        // $this->info('Build completata con successo!');
     }
 }
