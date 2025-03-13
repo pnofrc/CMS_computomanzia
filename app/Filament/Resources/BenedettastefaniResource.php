@@ -25,6 +25,8 @@ class BenedettastefaniResource extends Resource
     {
         return false;
     }
+
+
     public static function getPluralModelLabel(): string
     {
         return 'benedettastefani.it';
