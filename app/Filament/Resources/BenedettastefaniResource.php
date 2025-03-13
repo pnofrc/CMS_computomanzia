@@ -89,7 +89,7 @@ class BenedettastefaniResource extends Resource
                     ->label('Esegui Build')
                      ->action(function () {
                     // Definisci il percorso del vhost differente
-                    $vhostPath = '/var/www/vhosts/in-sospeso.com/benedettastefani.it';
+                    $vhostPath = '/var/www/vhosts/benedettastefani.it';
                     
                     // Esegui il comando npm run build nel percorso del vhost
                     $command = "cd $vhostPath && npm run build";
