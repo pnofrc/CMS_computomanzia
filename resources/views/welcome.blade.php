@@ -22,7 +22,7 @@
 
             p{
                 background: blue;
-                width: max-content;
+                width: inherit;
                 text-align: center;
                 padding: 1rem;
             }
