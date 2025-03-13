@@ -17,6 +17,8 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Hidden;
+use Filament\Tables\Actions\Action;
+use Illuminate\Support\Facades\Artisan;
 
 class BenedettastefaniResource extends Resource
 {
@@ -83,6 +85,11 @@ class BenedettastefaniResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Action::make('npm_build')
+                    ->label('Esegui Build')
+                    ->icon('heroicon-o-terminal')
+                    ->action(fn () => Artisan::call('npm:benedetta'))
+                    ->successNotificationTitle('Build completata con successo!'),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([

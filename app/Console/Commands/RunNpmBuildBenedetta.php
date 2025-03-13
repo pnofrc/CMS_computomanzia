@@ -26,8 +26,7 @@ class RunNpmBuildBenedetta extends Command
      */
     public function handle()
     {
-    $dir = '/var/www/vhosts/in-sospeso.com/benedettastefani.it';
-    $dir = '/Users/poni/benedetta';
+        $dir = '/var/www/vhosts/in-sospeso.com/benedettastefani.it';
 
 
         $process = new Process(['npm', 'run', 'build']);
