@@ -87,7 +87,6 @@ class BenedettastefaniResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Action::make('npm_build')
                     ->label('Esegui Build')
-                    ->icon('heroicon-o-terminal')
                     ->action(fn () => Artisan::call('npm:benedetta'))
                     ->successNotificationTitle('Build completata con successo!'),
             ])
