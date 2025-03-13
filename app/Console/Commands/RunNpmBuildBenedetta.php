@@ -26,16 +26,18 @@ class RunNpmBuildBenedetta extends Command
      */
     public function handle()
     {
-        $dir = '../../in-sospeso.com/benedettastefani.it/';
+        $command = 'cd /var/www/vhost/in-sospeso.com/benedettastefani.it/ && npm run build';
+        shell_exec($command);
 
 
-        $process = new Process(['npm', 'run', 'build']);
-        $process->setWorkingDirectory($dir); 
-        $process->run();
 
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
+        // $process = new Process(['npm', 'run', 'build']);
+        // $process->setWorkingDirectory($dir); 
+        // $process->run();
+
+        // if (!$process->isSuccessful()) {
+        //     throw new ProcessFailedException($process);
+        // }
 
         $this->info('Build completata con successo!');
     }
