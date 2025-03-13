@@ -26,9 +26,10 @@ class RunNpmBuildBenedetta extends Command
      */
     public function handle()
     {
-        $command = 'cd /var/www/vhost/in-sospeso.com/benedettastefani.it/ && npm run build';
+        $command = 'cd /var/www/vhost/in-sospeso.com/benedettastefani.it/';
         shell_exec($command);
-
+        $command2 = 'npm run build';
+        shell_exec($command2);
 
 
         // $process = new Process(['npm', 'run', 'build']);
