@@ -87,8 +87,22 @@ class BenedettastefaniResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Action::make('npm_build')
                     ->label('Esegui Build')
-                    ->action(fn () => Artisan::call('npm:benedetta'))
-                    ->successNotificationTitle('Build completata con successo!'),
+                     ->action(function () {
+                    // Definisci il percorso del vhost differente
+                    $vhostPath = '/var/www/vhosts/in-sospeso.com/benedettastefani.it';
+                    
+                    // Esegui il comando npm run build nel percorso del vhost
+                    $command = "cd $vhostPath && npm run build";
+                    
+                    // Esegui il comando
+                    $output = shell_exec($command);
+                    
+                    // Se vuoi loggare l'output per debug
+                    \Log::info('npm run build output: ' . $output);
+                    
+                    // Potresti anche usare la funzione Artisan per triggerare altre azioni se necessario
+                    // Artisan::call('custom:command');
+                }),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
