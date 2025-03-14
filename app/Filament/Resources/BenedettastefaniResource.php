@@ -19,7 +19,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Hidden;
 use Filament\Tables\Actions\Action;
 use Illuminate\Support\Facades\Artisan;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 class BenedettastefaniResource extends Resource
 {
 
@@ -57,6 +58,38 @@ class BenedettastefaniResource extends Resource
                 ->schema([
                     FileUpload::make('image')
                         ->label('Immagine')
+                        ->directory(directory: 'storage')
+                        ->saveUploadedFileUsing(function ($file) {
+                            // $file è l'istanza del file caricato (solitamente un Livewire\TemporaryUploadedFile)
+                            $tempPath = $file->getRealPath(); // Percorso temporaneo del file
+                    
+                            $maxSize = 700 * 1024; // 700 KB in byte
+                            $quality = 90; // Qualità iniziale
+                    
+                            // Ciclo per ridurre la qualità finché la dimensione del file non è inferiore a 700 KB
+                            while (filesize($tempPath) > $maxSize && $quality > 10) {
+                                // Usa ImageMagick per ridimensionare mantenendo l'aspect ratio
+                                // "-resize 1920x1920\>" ridimensiona solo se l'immagine supera 1920px, mantenendo il rapporto
+                                $command = "convert " . escapeshellarg($tempPath)
+                                    . " -resize 1920x1920\\> -quality {$quality} " . escapeshellarg($tempPath);
+                                exec($command);
+                                $quality -= 10;
+                            }
+                    
+                            // Ottieni il nome del file (generato da hashName)
+                            $fileName = $file->hashName();
+                    
+                            // Salva il file processato nel disco 'public'
+                            Storage::disk('public')->put($fileName, file_get_contents($tempPath));
+                    
+                            // Elimina il file temporaneo
+                            if (file_exists($tempPath)) {
+                                unlink($tempPath);
+                            }
+                    
+                            // Ritorna il nome del file che verrà salvato nel database
+                            return $fileName;
+                        })
                         ->required(),
 
                     TextInput::make('title')
