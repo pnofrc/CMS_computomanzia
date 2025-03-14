@@ -72,7 +72,7 @@ class BenedettastefaniResource extends Resource
                                     . " -resize {$resize}% " . escapeshellarg($tempPath);
                                 exec($command);
                             
-                                $resize -= 3;
+                                $resize -= 10;
                             }
                             
                     
