@@ -64,16 +64,17 @@ class BenedettastefaniResource extends Resource
                             $tempPath = $file->getRealPath(); // Percorso temporaneo del file
                     
                             $maxSize = 700 * 1024; // 700 KB in byte
-                            $quality = 90; // Qualità iniziale
+                            $resize = 95; // Qualità iniziale
                     
                             // Ciclo per ridurre la qualità finché la dimensione del file non è inferiore a 700 KB
-                            while (filesize($tempPath) > $maxSize && $quality > 10) {
+                            while (filesize($tempPath) > $maxSize) {
                                 // Usa ImageMagick per ridimensionare mantenendo l'aspect ratio
                                 // "-resize 1920x1920\>" ridimensiona solo se l'immagine supera 1920px, mantenendo il rapporto
                                 $command = "convert " . escapeshellarg($tempPath)
-                                    . " -resize 1920x1920\\> -quality {$quality} " . escapeshellarg($tempPath);
+                                    . " -resize {$resize} " . escapeshellarg($tempPath);
                                 exec($command);
-                                $quality -= 10;
+
+                                $resize -= 5;
                             }
                     
                             // Ottieni il nome del file (generato da hashName)
