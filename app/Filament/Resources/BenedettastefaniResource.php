@@ -48,7 +48,7 @@ class BenedettastefaniResource extends Resource
         return $form
             ->schema([
                 Hidden::make('title')
-                ->default('Contenuti :)') // Imposta un valore predefinito
+                ->default('Contenuti :)') 
                 ->dehydrated(true) 
                 ->required(),
 
@@ -57,6 +57,7 @@ class BenedettastefaniResource extends Resource
                 ->schema([
                     FileUpload::make('image')
                         ->label('Immagine')
+                        ->directory(directory: 'storage')
                         ->required(),
 
                     TextInput::make('title')
@@ -85,24 +86,7 @@ class BenedettastefaniResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Action::make('npm_build')
-                    ->label('Esegui Build')
-                     ->action(function () {
-                    // Definisci il percorso del vhost differente
-                    $vhostPath = '/var/www/vhosts/benedettastefani.it';
-                    
-                    // Esegui il comando npm run build nel percorso del vhost
-                    $command = "cd $vhostPath && npm run build";
-                    
-                    // Esegui il comando
-                    $output = shell_exec($command);
-                    
-                    // Se vuoi loggare l'output per debug
-                    \Log::info('npm run build output: ' . $output);
-                    
-                    // Potresti anche usare la funzione Artisan per triggerare altre azioni se necessario
-                    // Artisan::call('custom:command');
-                }),
+                
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
