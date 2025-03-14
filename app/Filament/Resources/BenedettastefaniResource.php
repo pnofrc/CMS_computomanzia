@@ -57,7 +57,6 @@ class BenedettastefaniResource extends Resource
                 ->schema([
                     FileUpload::make('image')
                         ->label('Immagine')
-                        ->directory(directory: '')
                         ->required(),
 
                     TextInput::make('title')
