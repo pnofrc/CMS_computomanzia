@@ -22,7 +22,7 @@ class UserResource extends Resource
 
         public static function canAccess(): bool
         {
-            return auth()->check() && in_array(auth()->user()->id, [2]);
+            return auth()->check() && in_array(auth()->user()->id, [1]);
         }
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
