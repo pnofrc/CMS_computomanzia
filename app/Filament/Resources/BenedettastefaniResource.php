@@ -63,18 +63,9 @@ class BenedettastefaniResource extends Resource
                             // $file è l'istanza del file caricato (solitamente un Livewire\TemporaryUploadedFile)
                             $tempPath = $file->getRealPath(); // Percorso temporaneo del file
                     
-                            $maxSize = 700 * 1024; // 700 KB in byte
-                            $resize = 95; // Qualità iniziale
-                            
-                            if (filesize($tempPath) > $maxSize) {
-                                // Usa ImageMagick per ridimensionare mantenendo l'aspect ratio
                                 $command = "convert " . escapeshellarg($tempPath)
-                                    . " -resize {$resize}% " . escapeshellarg($tempPath);
+                                    . " -resize 40%" . escapeshellarg($tempPath);
                                 exec($command);
-                            
-                                $resize -= 10;
-                            }
-                            
                     
                             // Ottieni il nome del file (generato da hashName)
                             $fileName = $file->hashName();
