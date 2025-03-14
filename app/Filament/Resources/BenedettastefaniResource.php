@@ -71,7 +71,7 @@ class BenedettastefaniResource extends Resource
                                 // Usa ImageMagick per ridimensionare mantenendo l'aspect ratio
                                 // "-resize 1920x1920\>" ridimensiona solo se l'immagine supera 1920px, mantenendo il rapporto
                                 $command = "convert " . escapeshellarg($tempPath)
-                                    . " -resize {$resize} " . escapeshellarg($tempPath);
+                                    . " -resize {$resize}% " . escapeshellarg($tempPath);
                                 exec($command);
 
                                 $resize -= 5;
