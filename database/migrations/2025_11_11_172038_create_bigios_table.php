@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('bigios', function (Blueprint $table) {
             $table->id(); 
             $table->string('title');
+            $table->string('about');
             $table->json('items')->nullable();
             $table->timestamps();
         });
