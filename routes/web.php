@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\benedettastefani;
+use App\Models\Bigio;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
