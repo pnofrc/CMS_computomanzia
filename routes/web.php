@@ -17,3 +17,15 @@ Route::get('/benedettastefani/{eh}', function ($eh) {
     }
 
 });
+
+
+
+Route::get('/bigio/{eh}', function ($eh) {
+    if ($eh == "bigiobello"){
+        $db = Bigio::get();
+        // dd($db);
+        return $db;
+    } else {
+        dd();
+    }
+});

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BenedettastefaniResource\Pages;
-use App\Filament\Resources\BenedettastefaniResource\RelationManagers;
-use App\Models\Benedettastefani;
+use App\Filament\Resources\BigioResource\Pages;
+use App\Filament\Resources\BigioResource\RelationManagers;
+use App\Models\Bigio;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,34 +15,24 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\Hidden;
-use Filament\Tables\Actions\Action;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\UploadedFile;
 
-class BenedettastefaniResource extends Resource
+class BigioResource extends Resource
 {
+    protected static ?string $model = Bigio::class;
 
-    public static function canCreate(): bool
+        public static function getPluralModelLabel(): string
     {
-        return false;
+        return 'studiobigio.xyz';
     }
 
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function getPluralModelLabel(): string
-    {
-        return 'benedettastefani.it';
-    }
-    protected static ?string $model = Benedettastefani::class;
-
-     public static function canAccess(): bool
+    public static function canAccess(): bool
      {
-         return auth()->check() && in_array(auth()->user()->id, [1,2]);
+         return auth()->check() && in_array(auth()->user()->id, [1,3]);
      }
-
-    protected static ?string $navigationIcon = 'heroicon-o-arrow-trending-up';
 
 
     public static function form(Form $form): Form
@@ -53,6 +43,10 @@ class BenedettastefaniResource extends Resource
                 ->default('Contenuti :)') 
                 ->dehydrated(true) 
                 ->required(),
+
+                RichEditor::make('about')
+                ->required(),
+                
 
                 Repeater::make('items')
                 ->label('Contenuti')
@@ -84,11 +78,6 @@ class BenedettastefaniResource extends Resource
                             return $fileName;
                         })
                         ->required(),
-                        
-
-                    TextInput::make('title')
-                        ->label('Titolo')
-                        ->required(),
 
                     TextInput::make('text')
                         ->label('Testo')
@@ -99,10 +88,8 @@ class BenedettastefaniResource extends Resource
             ]);
     }
 
-
     public static function table(Table $table): Table
     {
-         
         return $table
             ->columns([
                 TextColumn::make('title')
@@ -112,12 +99,11 @@ class BenedettastefaniResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                
             ])
             ->bulkActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\DeleteBulkAction::make(),
-                // ]),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
@@ -131,9 +117,9 @@ class BenedettastefaniResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBenedettastefani::route('/'),
-            // 'create' => Pages\CreateBenedettastefani::route('/create'),
-            'edit' => Pages\EditBenedettastefani::route('/{record}/edit'),
+            'index' => Pages\ListBigios::route('/'),
+            'create' => Pages\CreateBigio::route('/create'),
+            'edit' => Pages\EditBigio::route('/{record}/edit'),
         ];
     }
 }
