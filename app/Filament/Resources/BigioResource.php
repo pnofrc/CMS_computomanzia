@@ -59,29 +59,7 @@ class BigioResource extends Resource
                     FileUpload::make('image')
                         ->label('Immagine')
                         ->directory(directory: 'storage')
-                        ->saveUploadedFileUsing(function ($file) {
-                            // $file è l'istanza del file caricato (solitamente un Livewire\TemporaryUploadedFile)
-                            $tempPath = $file->getRealPath(); // Percorso temporaneo del file
-                        
-                            // Ridimensiona l'immagine al 35%
-                            $command = "convert " . escapeshellarg($tempPath)
-                                     . " -resize 35% " . escapeshellarg($tempPath);
-                            exec($command);
-                        
-                            // Ottieni il nome del file (generato da hashName)
-                            $fileName = $file->hashName();
-                        
-                            // Salva il file processato nel disco 'public'
-                            Storage::disk('public')->put($fileName, file_get_contents($tempPath));
-                        
-                            // Elimina il file temporaneo
-                            if (file_exists($tempPath)) {
-                                unlink($tempPath);
-                            }
-                        
-                            // Ritorna il nome del file che verrà salvato nel database
-                            return $fileName;
-                        })
+        
                         ->required(),
 
                     TextInput::make('text')
